@@ -1,10 +1,10 @@
-<script setup>
-const user = useSupabaseUser()
-</script>
-
 <template>
-  <div class="container" style="padding: 50px 0 100px 0">
-    <Account v-if="user" />
-    <Auth v-else />
+  <div>
+    <CorgiGallery :images="images"/>
   </div>
 </template>
+
+<script setup>
+const client = useSupabaseClient()
+const { data: images } = await useAsyncData('images', async () => client.from('corgis').select(), { transform: result => result.data})
+</script>
